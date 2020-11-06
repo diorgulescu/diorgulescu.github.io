@@ -74,7 +74,7 @@ But, for my needs, a simple Remote Desktop Connection was enough.
 
 I ran the ''diskpart.exe'' tool from a simple command prompt ("cmd.exe") and formatted the second SSD drive on my server (~500GB) and assigned it a drive letter:
 
-<code>
+```
 c:\diskpart
 DISKPART> list disk
   Disk ###  Status         Size     Free     Dyn  Gpt
@@ -90,7 +90,7 @@ DISKPART> list partition
 DISKPART> select partition 1
 DISKPART> format fs=NTFS quick
 DISKPART> assign letter=D
-</code>
+```
 
 ## Copying files to the Hyper-V host
 

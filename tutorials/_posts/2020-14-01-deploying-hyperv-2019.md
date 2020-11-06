@@ -5,14 +5,17 @@ date:   2020-11-01 09:00:00 +0200
 category: tutorials
 ---
 
-## Prerequisites 
+### Prerequisites 
 
-+ For fully managing the Hyper-V server remotely, you need to install Remote Server Admnistration Tools ([https://www.microsoft.com/en-us/download/details.aspx?id=45520])
-+ Download the Hyper-V 2019 ISO from Microsoft: [https://www.microsoft.com/en-us/evalcenter/evaluate-hyper-v-server-2019]
-+ Rufus USB flashing tool: [https://rufus.ie/]
++ For fully managing the Hyper-V server remotely, you need to install [Remote Server Administration Tools] 
++ Download the [Hyper-V 2019 ISO] from Microsoft: 
++ [Rufus] USB flashing tool 
 + A decent PC LOL
 
-## Installation 
+[Remote Server Administration Tools]: https://www.microsoft.com/en-us/download/details.aspx?id=45520
+[Hyper-V 2019 ISO]: https://www.microsoft.com/en-us/evalcenter/evaluate-hyper-v-server-2019
+[Rufus]: https://rufus.ie/
+### Installation 
 
 Well, not much to say here. Pretty straightforward, just like a normal Windows installation.
 
@@ -21,7 +24,7 @@ Once the ISO is downloaded, stick an USB stick into your PC and launch Rufus. Se
 Reboot your server-to-be and select the USB drive as a boot option. Then, carry on as usual.
 
 Easy-peasy lemon-squeezy!
-## Enable Remote Hyper-V Management 
+### Enable Remote Hyper-V Management 
 
 *This is strictly in regards to Hyper-V and it's settings. For "full" remote server management, please see the section about using Remote Administration Tools/Server Manager.*
 
@@ -50,27 +53,27 @@ Enable-WSManCredSSP -Role "Client" -DelegateComputer "192.168.1.6"
 
 After that, it was required for me edit the Group Policies. 
 
-## Edit Group Policies
+### Edit Group Policies
 
 Again, following the official instructions from Microsoft proved to be insufficient, so I once again need to praise Taylord Tech, because he did encounter all these issues and pointed to a valuable tip.
 
 Open <code>gpedit.msc</code> and go to **"Computer Configuration > Administrative Templates > System > Credentials Delegation"**. Double click **"Allow delegating fresh credentials with NTLM-only server authentication"** and select **"Enable"**. Then, Click **"Show"**, next to **"Add servers to the list"** and add **"WSMAN\*"**. The official docs say one should add the FQDN of the server (**"WSMAN\HYPERV-SERVER"** in my case), but that didn't work at all for me. 
 
-## Enable Remote Disk Management 
+### Enable Remote Disk Management 
 
 *I did not succeed in setting up remote disk management, even though I did follow some how-to's/tutorials/links in the MS Docs. I issued the following PowerShell commands on both the server & the client, but with no luck:*
 
-<code>
+```
 Set-NetFirewallRule –Name “RVM-VDS-In-TCP” –Enabled True -Profile Any
 Set-NetFirewallRule –Name “RVM-VDSLDR-In-TCP” –Enabled True -Profile Any
 Set-NetFirewallRule –Name “RVM-RPCSS-In-TCP” –Enabled True -Profile Any
-</code>
+```
 
 After installing **Remote Server Administration Tools** on my Windows 10 laptop, I couldn't get the Server Manager to properly connect to the Hyper-V host. I have some things to learn, that's true. The errors were in regards to HTTPS access, since my laptop & server are not part of a domain (I guess that has something to do with it). 
 
 But, for my needs, a simple Remote Desktop Connection was enough.
 
-## Adding a new disk
+### Adding a new disk
 
 I ran the ''diskpart.exe'' tool from a simple command prompt ("cmd.exe") and formatted the second SSD drive on my server (~500GB) and assigned it a drive letter:
 
@@ -92,13 +95,13 @@ DISKPART> format fs=NTFS quick
 DISKPART> assign letter=D
 ```
 
-## Copying files to the Hyper-V host
+### Copying files to the Hyper-V host
 
 Now, I just needed a way to actually copy some ISO's over to the server so that I could install various operating systems. Being in the context of a homelab, I resorted to file sharing (I even mapped the drive on which I keep my "ISO store"). For that, I issued the following from a Powershell instance on the Server:
 
-<code>
+```
 netsh advfirewall firewall set rule group="File and Printer Sharing" new enable=Yes
-</code>
+```
 
 Then, I mapped the **C:** drive on my server to **Z:** on my laptop. This way, I was able to copy all ISO files I would ever need (and not only that).
 
@@ -106,12 +109,12 @@ Right after that, I began installing my first VMs on my first homelab Hyper-V Se
 
 Yay me!
 
-===== References & Resources =====
+### References & Resources 
 
-+ [https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/manage/remotely-manage-hyper-v-hosts]
-+ [https://www.youtube.com/watch?v=57Ijn7re8X8]
-+ [https://social.technet.microsoft.com/Forums/office/en-US/cbdbcf92-d697-41d1-aa7a-bacf34bd48a5/remote-disk-management-rpc-server-unavailable]
-+ [https://serverfault.com/questions/449192/server-2012-core-no-gui-how-to-manage-disks]
-+ [http://technet.microsoft.com/en-us/library/cc770877.aspx]
-+ [https://www.nakivo.com/blog/copy-iso-file-hyper-v-host/]
++ [https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/manage/remotely-manage-hyper-v-hosts](https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/manage/remotely-manage-hyper-v-hosts)
++ [https://www.youtube.com/watch?v=57Ijn7re8X8](https://www.youtube.com/watch?v=57Ijn7re8X8)
++ [https://social.technet.microsoft.com/Forums/office/en-US/cbdbcf92-d697-41d1-aa7a-bacf34bd48a5/remote-disk-management-rpc-server-unavailable](https://social.technet.microsoft.com/Forums/office/en-US/cbdbcf92-d697-41d1-aa7a-bacf34bd48a5/remote-disk-management-rpc-server-unavailable)
++ [https://serverfault.com/questions/449192/server-2012-core-no-gui-how-to-manage-disks](https://serverfault.com/questions/449192/server-2012-core-no-gui-how-to-manage-disks)
++ [http://technet.microsoft.com/en-us/library/cc770877.aspx](http://technet.microsoft.com/en-us/library/cc770877.aspx)
++ [https://www.nakivo.com/blog/copy-iso-file-hyper-v-host/](https://www.nakivo.com/blog/copy-iso-file-hyper-v-host/)
   

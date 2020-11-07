@@ -13,4 +13,5 @@ You can &hellip;
 [email]: mailto:{{ site.email }}
 [irc]: irc://chat.freenode.net/{{ site.ircchannel }}
 [twitter]: https://twitter.com/{{ site.twitter }}
+[reddit]: https://www.reddit.com/user/{{ site.reddit }}
 

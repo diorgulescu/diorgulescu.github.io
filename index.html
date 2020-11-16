@@ -8,21 +8,10 @@ updated: 2020-11-05 07:01:26 +0100
 <h2>Hi, I'm Dragoș, a computer enthusiast from Bucharest!</h2>
 
 While not in front of a computer screen, I spend my time together with my family or immersed in toys that produce sounds and have a lot of knobs. Of course, I enjoy reading, taking photos of stuff and spending a lot of time doubting everything. I love toying around with music and noise, playing a six-string bass, synths and a bit of (digital) piano.
-
+<br/><br/>
 I work with Linux, FreeBSD, Windows systems (both server and workstation), Python, virtualization (VMWare ESXi, MS Hyper-V, libvirt/kvm/qemu) and a bit of C. I also have an itch for embedded systems and obscure operating systems (QNX, Haiku, Plan 9 from Bell Labs, etc.).
-
+<br/><br/>
 Have been involved in Software Testing and Test Automation for quite some time, in various forms, but also extended my reach into Systems Administration (mainly for test lab management). Bash, some HTML5 and CSS3, CI/CD setups, Linux/FreeBSD as a daily driver and a tad of electronics are not foreign to my ears. Fond of bicycles and tinkering stuff.  
-
+<br/></br>
 Currently on a quest to consolidate and update my networking and Systems Administration knowledge. Building my own homelab and enrolling in the GNS3 Academy were the most important steps I took towards this goal.
 
-{% for category in site.categories %}
-  {% assign cat = category | first %}
-  <h3>New {{ cat }}</h3>
-  <ul>
-  {% for post in site.categories[cat] limit:2 %}
-    {% unless post.draft %}
-      <li><a href="{{ post.url }}">{{ post.title }}</a></li>
-    {% endunless %}
-  {% endfor %}
-  </ul>
-{% endfor %}

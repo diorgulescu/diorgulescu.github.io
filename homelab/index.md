@@ -4,8 +4,8 @@ title: Homelab
 updated: 2020-11-05 09:00:00 +0200
 ---
 
-## 
-Why?
+## Why?
+
 Because I really love playing around with various devices, testing out configurations and learning new stuff along the way. The thought of building my own “playground”/homelab occurred to me some years ago, but I’ve only just now got motivated enough to actually go ahead & build it (Thanks COVID-19!).
 
 Since I live in a relatively small 2-bedroom apartment with a 3-year old (wildly curious) kid & another toddler, space constraints are a given (so are child safety “gadgets”). Hence my discreet living room desk setup.

@@ -68,15 +68,16 @@ I’m mainly working as a Software Test Engineer (and have been for 15 years), b
 + 2 x Raspberry Pi 2 v1.1
 + 3 x Raspberry Pi 4 4GB
 + 1 x Raspberry Pi 4 8GB (for running VMWare ESXi Fling for ARM)
-+ 1 x Anker PowerPort 60W Desktop USB power source (with 6 ports, each getting 2.4 Amps)
-+ 2 x GeekPi Acrylic cluster cases for Raspberry Pi (needed two sets for building a larger stack)
++ 1 x [Anker PowerPort 60W Desktop USB power source](https://www.amazon.co.uk/gp/product/B00PK1IIJY/) (with 6 ports, each getting 2.4 Amps)
++ 2 x [GeekPi Acrylic cluster cases for Raspberry Pi](https://www.amazon.co.uk/gp/product/B07J9VMNBL/) (needed two sets for building a larger stack)
 + 1 x Western Digital 250 GB SSD USB3.1 (used as a datastore for VMWare ESXi, on the Pi)
 + 1 x Atrust Intel-based thin client (an older, refurbished and fanless machine)
 + 1 x SuperMicro A1SAi mini-server based on the A1SRi-2358F motherboard, running VMWare ESXi (hosting an instance of pfSense that takes care of routing and LAN segments)
 + 1 x Proxmox VE Server (this is my former desktop that got converted to a server), based on an AMD Ryzen 5 CPU with 32 GB DDR4 & almost 1 TB SSD storage
 + 1 x Dell OptiPlex 3050 Micro (7th gen i5, 8 GB DDR4, Windows 10 Pro) acting as a media & file server (it’s linked to the TV and it also runs a Syncthing server to which our mobile phones upload photos - instead of relying on Google Photos, OneDrive, etc.)
 + 1 x TP-Link TL-WR841N/ND v7 (my 10-year old WiFi router, now running OpenWRT and taking care of the wireless network associated with the lab)
-+ 1 x 8-port Netgear GS308E Gigabit managed switch
++ 1 x [8-port Netgear GS308E Gigabit managed switch](https://www.amazon.co.uk/gp/product/B07QHD134G/)
++ 2 x [UK-to-EU power plug adapters](https://www.amazon.co.uk/gp/product/B079NT1RMG/) 
 + 1 x Zyxel 5-port Gigabit managed switch
 + Cables
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linux on iorgos.net</title>
+    <link>https://iorgos.net/tags/linux/</link>
+    <description>Recent content in linux on iorgos.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 24 Mar 2021 22:00:00 +0000</lastBuildDate><atom:link href="https://iorgos.net/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Quickly creating fixed sized files in Linux &amp; Windows</title>
+      <link>https://iorgos.net/posts/create-fixed-sized-files/</link>
+      <pubDate>Wed, 24 Mar 2021 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/posts/create-fixed-sized-files/</guid>
+      <description>Often times, while working as a Software Test Engineer, I encountered situations in which the software I was testing relied a lot on available disk space. If that wasn’t the case, surely it had a way to upload files to it (either through a WEB-UI or by sending them over a certain network protocol). So, I was either going to make sure the device/machine that program ran on would end up without any available disk space at a given point in time, or try to crash the whole program by feeding it large dummy or random binary files.</description>
+    </item>
+    
+    <item>
+      <title>Ricing is the illusion of productivity</title>
+      <link>https://iorgos.net/posts/ricing-illusion-productivity/</link>
+      <pubDate>Wed, 24 Mar 2021 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/posts/ricing-illusion-productivity/</guid>
+      <description>Going &amp;ldquo;hardcore ultra-minimal&amp;rdquo; like others do might not suit you. And that&amp;rsquo;s a good thing.
+Well, the title might seem a bit too generic, but bare with me because I’ll try to make things clear.
+A bit of history I have been using Linux for quite a long time. I first touched it during highschool and ended up learning how to dual boot my PC with Windows 2000 &amp;amp; Red Hat Linux 5 (not RHEL, but the old distro).</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<style type=text/css>body{font-family:monospace;}</style>
+	<title>Compiling ‘suckless tools’ on FreeBSD</title>
+	
+	
+	<link rel="stylesheet" href="/css/style.css">
+	
+	
+</head>
+<body>
+	<header>
+	================<br>
+	== <a href="https://iorgos.net/">iorgos.net</a> ==<br>
+	================
+	<div style="float: right;">homepage of dragoș iorgulescu</div><br>
+	<p>
+	<nav>
+			<a href="/"><b>Start</b></a>.
+			
+			
+			<a href="/posts/"><b>Posts</b></a>.
+			
+			<a href="/categories/"><b>Categories</b></a>.
+			
+			<a href="/sounds"><b>Sounds</b></a>.
+			
+			<a href="/tags/"><b>Tags</b></a>.
+			
+	</nav>
+	</p>
+	
+</header>
+
+	
+	<main>
+		<article>
+			<h1>Compiling ‘suckless tools’ on FreeBSD</h1>
+			<b><time>23.10.2019 22:00</time></b>
+		       
+		           <a href="/tags/freebsd">freebsd</a>
+        	       
+		           <a href="/tags/suckless">suckless</a>
+        	       
+
+			<div>
+				<p>I wrote this tutorial for potential new users that want to try out new stuff and wish to expand their technical knowledge, but also because there are some commands and details around here I might forget some months or years down the line (for example, Xorg video driver configurations). The whole writing process was a very good opportunity for me to extend the CSS I used for my website and to try do to a better job at formatting tech/code/console-related text. I would be glad if someone else found these instructions useful.</p>
+<p><strong>⚠ WARNING This tutorial was written on October 23rd, 2019. I decided to keep it here for reference. Things potentially marked as „In progress”, „Not solved” or „Not working” (if any at a given time) may already have a workaround or a solution. Keep in mind that the exact instructions provided here may not be fully applicable to your system’s context!</strong></p>
+<h2 id="why-bother">Why bother?</h2>
+<p>Since most of these tools are already available in the FreeBSD package tree, why go through the hassle of building them yourself? Well, why bother with anything, really?</p>
+<p>In my opinion, this is the only way you get to truly undestrand how these tools are built and how they interact with each other. There’s also a small chance you’ll get the hang of manually building software if you’re not used to it or never have done it before. Last,but not least, you get to customize each software piece. Since suckless tools rely on the user recompiling the source files in order to set various parameters, this is the way to do it. Finally, it’s a good first look at the (I would say) intentional philosophy behind these tools.</p>
+<h2 id="assumptions">Assumptions</h2>
+<ul>
+<li>First of all, you have a new, freshly installed FreeBSD system (version 12 being the latest stable one, at the time of writing). No X server, no pkg-config, etc. The following steps describe what one should to in order to get a fully functional suckless.org-based desktop (strange choice of words, I know).</li>
+<li>Of course, a bit of experience working in a console is required. But why would you install FreeBSD otherwise?</li>
+<li>Your user account has administrative privileges or is, at least, added to the /usr/local/etc/sudoers file</li>
+<li>You have read about the tools developed by the people at suckless.org and their philosophy (if not, go do it now, because it won’t take long)</li>
+<li>You understand that in order to change some configuration attributes, editing a C header file is mandatory. Luckily, this is just a formality and you don’t really need to know C in order to change some intuitive settings.</li>
+</ul>
+<h2 id="general-guidelines">General guidelines</h2>
+<p>Change <code>X11INC</code> and <code>X11LIB</code> paths in each &amp; every config.mk file (each tool folder contains one such file). This is their FreeBSD-adjusted form:</p>
+<pre><code>X11INC=/usr/local/include
+X11LIB=/usr/local/lib
+</code></pre><p>Each software piece produced by the people at suckless.org relies on a <code>config.h</code> header file that lies in the main source folder, along with Makefile and all the rest. This file does not exist by default, but a template with default settings is available. So, do a quick <code>$ cp config.def.h config.h</code> for each tool you wish to setup.</p>
+<h2 id="preparations">Preparations</h2>
+<p>To setup these tools, we need to install a few things first. Issue this command as root or with sudo privileges:</p>
+<pre><code>$ pkg install git xorg-server xorg-fonts-truetype gcr devel/glib20 \ 
+xorg-fonts-type1 p5-X11-Xlib p5-PkgConfig xauth xrandr xinit libXft xrdb webkit2-gtk3 \
+feh xf86-input-mouse xf86-input-keyboard linux-c7-libpng
+</code></pre><p>Good. Now, let’s take it step by step. In order to keep things organized, create a folder in your home directory where the sources will be stored. Then, proceed in fetching all the source files:</p>
+<pre><code>$ mkdir ~/git
+$ cd git
+$ git clone git://git.suckless.org/dmenu
+$ git clone git://git.suckless.org/slstatus
+$ git clone git://git.suckless.org/st
+$ git clone git://git.suckless.org/dwm
+$ git clone git://git.suckless.org/sent
+$ git clone git://git.suckless.org/surf
+</code></pre><p>Of course, there are more tools available (farbfeld, tabbed, slock, etc.), but these are not essential and will be covered in a separate post.TIP: st is an acronym for „suckless terminal”. It’s quite a simple terminal and some of the functionalities you might’ve found in xterm are missing (even scrolling). Of course, these can all be set by editing the config.h file, but if you want a quick alternative, go ahead and download Luke Smith’s build, which includes tweaks and additional settings that turn this into a more usable terminal emulator.</p>
+<p>Now you are ready to start building.</p>
+<h2 id="dmenu-a-fast-app-search--launch-thingy">dmenu (a fast app „search &amp; launch” thingy)</h2>
+<p>This is a nifty tool that allows you to search &amp; execute programs installed on your system. By default, it uses a so-called „Mod key” in combination with „P”, but we’ll get to that later. In short: this is a must for convenience.</p>
+<pre><code>$ cd dmenu
+$ cp config.def.h config.h
+$ vim config.h
+$ vim config.mk
+</code></pre><h3 id="configmk">config.mk</h3>
+<ul>
+<li>Set <code>FREETYPEINC</code> to <code>/usr/local/include/freetype2</code></li>
+<li>Update <code>X11INC</code> and <code>X11LIB</code> as shown in the Prerequisites section</li>
+</ul>
+<h3 id="configh">config.h</h3>
+<p>Increase the font from 10 to 12 or more. This is for readability, but it’s a matter of taste and eyestrain:
+<code>static const char *fonts[] = {&quot;monospace:size=12&quot;}</code>
+Now, build and install it:
+<code>$ make $ sudo make install</code></p>
+<h2 id="slstatus-a-nice-status-bar">slstatus (a nice status bar)</h2>
+<p>Actually, a very nice and highly customizable status bar. Create the config.h file from the template and edit it.</p>
+<pre><code>$ cd ../slstatus
+$ cp config.def.h config.h
+</code></pre><h3 id="configh-1">config.h</h3>
+<p>Since there are quite a lot of available options, here’s how my file looks at the moment (for my laptop installation, that is):</p>
+<pre><code>static const struct arg args[] = {
+        /* function format          argument */
+        { datetime, &quot;%s&quot;,           &quot;%F %T&quot; },
+        { cpu_perc, &quot;[CPU %3s%%] &quot;, NULL    },
+        { ram_used, &quot;[RAM %2s%%] &quot;, NULL    },
+        { battery_state, &quot;[BAT %s&quot;, &quot;BAT0&quot; },
+        { battery_perc, &quot;%s%%] &quot;, &quot;BAT0&quot; },
+        { run_command, &quot;[VOL %s%%] &quot;, &quot;/bin/sh -c \&quot;amixer get Master | tail -n1 | grep -Po '\\[\\K[^%]*' | head -n1\&quot;&quot; },
+        { ipv4, &quot;[wlan0 %s] &quot;, &quot;wlan0&quot; }
+};
+</code></pre><p>All available options and attributes are listed in a long comment inside the original config.def.h file. Please do check them out!</p>
+<h3 id="configmk-1">config.mk</h3>
+<p>Update X-related variables (as previously shown)</p>
+<h3 id="makefile">Makefile</h3>
+<p>For some reason I still can’t grasp, the swap component causes a compilation error. Since I don’t find it useful, I choose to take it out of the build process. Just edit the Makefile and remove the following line:</p>
+<pre><code>components/swap  \
+</code></pre><p>Next, the usual:</p>
+<pre><code>$ make
+$ sudo make install
+</code></pre><h2 id="dwm-the-window-manager">dwm (THE window manager)</h2>
+<p>Or the dynamic window manager. In my opinion, probably i3’s nemesis. A tiling window manager that’s very lightweight &amp; fast. Very similar to i3 in some respects, but a bit different when it comes to how it’s being used (refer to the original docs for details). I admit that it might not seem very different to the average user, but the specifics come about after using it for at least a week.</p>
+<pre><code>$ cd ../dwm
+$ cp config.def.h config.h
+</code></pre><h3 id="configh-2">config.h</h3>
+<p>By default, the „modifier key” (the one used for all keyboard shortcuts) is Alt. If one wants to use the Win key, for example, the MODKEY must be redefined. Go to line 47 in config.h and change Mod1Mask to Mod4Mask (Mod1Mask for Alt). You should end up with:
+<code>#define MODKEY Mod4Mask</code>
+dwm uses „st” implicitly when the user requests a new terminal window (<code>$MODKEY</code> + Shift + Enter). If another terminal emulator is desired, feel free to set it at line 60:
+<code>static const char *termcmd[] = {&quot;xterm&quot;, NULL}</code>
+I am not comfortable with small screen fonts, therefore I also change that at line 8:
+<code>static const char *fonts[] = {&quot;monospace:size=12&quot;}</code></p>
+<h3 id="configmk-2">config.mk</h3>
+<p>Update freetype fonts path:
+<code>FREETYPEINC=/usr/local/include/freetype2</code></p>
+<p>Next:</p>
+<pre><code>$ sudo make clean install
+</code></pre><h2 id="st-simple-terminal">st („simple terminal”)</h2>
+<p>The people at suckless.org find xterm to be bloated and carrying a lot of „baggage” (code for interacting with systems that nowadays are pretty scarce). Therefore, they developed their own terminal emulator. A very basic one, which lacks some of the features I personally love about xterm and mrxvt (like scrolling and easy copy/pasting). Of course, it can be extended and tinkered by tackling the config.h file, but there is an alternative: Luke Smith’s st fork actually contains all these missing features. If you wish to use that instead, go ahead and clone his repo.</p>
+<p>Because I like Luke’s fork, I am going to remove the original st I cloned at the very beginning and fetch that instead:</p>
+<pre><code>$ cd ..
+$ rm -rf st/
+$ git clone https://github.com/LukeSmithxyz/st.git
+$ cd st
+</code></pre><p>Of course, feel free to mess around with the config file if you wish.</p>
+<p>In case you really want to use the original st repository, keep the current clone and remember to $ cp config.def.h config.h so you have a custom config file.</p>
+<p>Of course, some changes need to be made in order to successfully compile st on FreeBSD.</p>
+<h3 id="configmk-3">config.mk</h3>
+<p>Update <code>X11INC</code> &amp; <code>X11LIB</code> paths as before:</p>
+<pre><code>X11INC = /usr/local/include
+X11LIB = /usr/local/lib
+</code></pre><p>Properly set <code>PKG_CONFIG</code>:</p>
+<pre><code>PKG_CONFIG=/usr/local/bin/pkg-config
+</code></pre><p>Once all settings are in place, build &amp; install:</p>
+<pre><code>$ sudo make clean install
+</code></pre><p>sent</p>
+<p>It’s trendy to „go minimal” nowadays, but minimalism itself is not a new thing. Let’s face it: letting go of superficial content &amp; eye-candy is the only way to actively focus on relevant issues and information. sent adheres to the Takahashi method by helping you create simple presentations that support you, the presenter.</p>
+<p>During a corporate or technical presentation, the presenter needs to be the one people pay attention to, not the slides coming on &amp; off the walls. Apart from some relevant screenshots or simple charts, concise textual information is the only thing that should reside in a presentation.</p>
+<p>Just remember how many times you dozed-off during a boring but visually loaded presentation. Wouldn’t it be nicer if you could bravely show an alternative way of doing presentations? At least the more technical ones, which target tech people. You know, challenging the status-quo of MS PowerPoint.</p>
+<h3 id="configmk-4">config.mk</h3>
+<ul>
+<li>Update X-related paths as shown before</li>
+<li>Change <code>-I/usr/include/freetype2</code> to <code>-I/usr/local/include/freetype2</code> in <code>INCS</code></li>
+</ul>
+<p><code>config.h</code> is a good place to learn about all the available shortcuts and options.</p>
+<p>Then,</p>
+<pre><code>$ sudo make clean install
+</code></pre><p>I intend to do a brief tutorial for this tool in the near future.</p>
+<h2 id="surf">surf</h2>
+<p>Talking about minimalism, here’s a Webkit-based browser that has no tabs or any other „bling”. Just the main window and a few shortcuts. It handles almost any common website very well, including HTML5, CSS3, JavaScript and the such. I admit this is the browser I use 99% of the time, except those moments when I must make sure some CSS changes in my website’s appearance work well on others, too.</p>
+<p>It’s kind of tricky for someone that’s been using dozens of tabs &amp; browser extensions, but I fancy it quite a lot. Maybe it is because using many tabs has a confusing effect on me, making me lose focus a lot easier. I remember a time when I started working on a Firefox extension that would deny the use of more than one tab :).</p>
+<p>Anyway, I will come back to surf and „focused browsing” on another occasion.</p>
+<p>This one is pretty straightforward, assuming you don’t want to tinker all options availabe in config.h:</p>
+<pre><code>$ cd ../surf
+$ sudo make clean install
+</code></pre><p>If all goes well, lauch it using something like surf <a href="https://duckduckgo.com">https://duckduckgo.com</a>. If you want to enter a different web address in the current window, use Ctrl + G and then just type it and hit Enter.TIP: Alternatively, you may use a fork of surf that improves usability by facilitating bookmarks and the use of WebKit Inspector (useful for web developers). If that sounds good, go ahead and</p>
+<pre><code>$ rm -rf git/surf; git clone https://github.com/imiric/surf.git
+</code></pre><h2 id="xorg-configuration">Xorg configuration</h2>
+<p>At this point, we have everything we need to start using our new „desktop UI”. In order to wrap this up, we need to make sure Xorg uses the appropriate display drivers and quickly set a couple other things. nVidia drivers ¶</p>
+<p>I use a GeForce GT 430 on my desktop. Even though I knew the adapter was officially supported by the original nVidia driver for FreeBSD systems, I set things wrong the first time. So, here are the steps, in order:</p>
+<p>Install the official nVidia driver (check the version you need, depending on your graphics card):</p>
+<pre><code>$ sudo kldload linux64
+$ sudo pkg install nvidia-driver
+</code></pre><p>Run <code>sudo sysrc kld_list+=&quot;nvidia-modeset&quot;</code> Add the following to <code>/boot/loader.conf</code>:</p>
+<pre><code>linux_load=&quot;YES&quot;
+linux64_load=&quot;YES&quot;
+</code></pre><p>Create <code>/usr/local/etc/X11/xorg.conf.d/driver-nvidia.conf</code> and add populate it with the following:</p>
+<pre><code>Section &quot;Device&quot;
+        Identifier &quot;NVIDIA Card&quot;
+        VendorName &quot;NVIDIA Corporation&quot;
+        Driver &quot;nvidia&quot;
+EndSection
+</code></pre><h3 id="intel-integrated-graphics">Intel integrated graphics</h3>
+<pre><code>sudo pkg install drm-kmod
+</code></pre><p>Edit <code>/etc/rc.conf</code> and add:</p>
+<pre><code>kld_list=&quot;/boot/modules/i915kms.ko&quot;
+</code></pre><h3 id="keyboard-configuration">Keyboard configuration</h3>
+<p>Create <code>/usr/local/etc/X11/xorg.conf.d/kbd-layout-multi.conf</code> and add:</p>
+<pre><code>Section &quot;InputClass&quot;
+ Identifier &quot;All Keyboards&quot;
+ MatchIsKeyboard &quot;yes&quot;
+ Option  &quot;XkbLayout&quot; &quot;us, ro&quot;
+EndSection
+</code></pre><h3 id="xinitrc">.xinitrc</h3>
+<p>Create <code>.xinitrc</code> in your <code>$HOME</code> and populate it accordingly:</p>
+<pre><code>xrdb -load $HOME/.Xresources
+slstatus&amp;
+exec dwm
+</code></pre><h3 id="xresources">.Xresources</h3>
+<p>Using your editor, create <code>$HOME/.Xresources</code> and add the following):</p>
+<pre><code>! Use a nice truetype font and size by default...
+xterm*faceName: DejaVu Sans Mono Book
+xterm*faceSize: 12
+
+! Every shell is a login shell by default (for inclusion of all necessary environment variables)
+xterm*loginshell: true
+
+! I like a LOT of scrollback...
+xterm*savelines: 16384
+
+! double-click to select whole URLs 😀
+xterm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+
+! DOS-box colours...
+xterm*foreground: rgb:a8/a8/a8
+xterm*background: rgb:00/00/00
+xterm*color0: rgb:00/00/00
+xterm*color1: rgb:a8/00/00
+xterm*color2: rgb:00/a8/00
+xterm*color3: rgb:a8/54/00
+xterm*color4: rgb:00/00/a8
+xterm*color5: rgb:a8/00/a8
+xterm*color6: rgb:00/a8/a8
+xterm*color7: rgb:a8/a8/a8
+xterm*color8: rgb:54/54/54
+xterm*color9: rgb:fc/54/54
+xterm*color10: rgb:54/fc/54
+xterm*color11: rgb:fc/fc/54
+xterm*color12: rgb:54/54/fc
+xterm*color13: rgb:fc/54/fc
+xterm*color14: rgb:54/fc/fc
+xterm*color15: rgb:fc/fc/fc
+
+! right hand side scrollbar...
+xterm*rightScrollBar: true
+xterm*ScrollBar: true
+
+! stop output to terminal from jumping down to bottom of scroll again
+xterm*scrollTtyOutput: false
+</code></pre><h2 id="ready-go">Ready? Go!</h2>
+<p>The moment has come. Reboot your system to make sure all modules are loaded correctly.</p>
+<p>Then:</p>
+<pre><code>$ startx
+</code></pre><p>That’s mainly it. I hope this was useful. The config files I use can be found in this repo.</p>
+
+			</div>
+		</article>
+	</main>
+<aside>
+	<div>
+		<div>
+			<h3>LATEST POSTS</h3>
+		</div>
+		<div>
+			<ul>
+				
+				<li><a href="/posts/curatenie-reprezentata-femei/">Femeile sunt Icoana curățeniei și a confortului</a></li>
+				
+				<li><a href="/posts/telefonul/">Telefonul</a></li>
+				
+				<li><a href="/posts/deploy-hyperv-2019/">Deploying Microsoft Hyper-V Server 2019 without a Domain Controller</a></li>
+				
+				<li><a href="/posts/soferi-grabiti-scaune-copii/">Șoferii grăbiți și scaunele auto pentru copii</a></li>
+				
+				<li><a href="/posts/create-fixed-sized-files/">Quickly creating fixed sized files in Linux &amp; Windows</a></li>
+				
+			</ul>
+		</div>
+	</div>
+</aside>
+
+
+	<footer>
+	<p>&copy; 2021 <a href="https://iorgos.net/"><b>iorgos.net</b></a>.
+	<a href="#ZgotmplZ"><b>E-mail</b></a>.
+	<a href="https://github.com/diorgulescu"><b>Github</b></a>.
+	<a href="https://mstdn.social/web/@scentient_pencils"><b>Mastodon</b></a>.
+	<a href="https://my.namebox.ro/aff.php?aff=505"><b>Proudly hosted on namebox.ro</b></a>.
+	</p>
+</footer>
+
+</body>
+</html>

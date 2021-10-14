@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<style type=text/css>body{font-family:monospace;}</style>
+	<title></title>
+	
+	
+	<link rel="stylesheet" href="/css/style.css">
+	
+	
+</head>
+<body>
+	<header>
+	================<br>
+	== <a href="https://iorgos.net/">iorgos.net</a> ==<br>
+	================
+	<div style="float: right;">homepage of dragoș iorgulescu</div><br>
+	<p>
+	<nav>
+			<a href="/"><b>Start</b></a>.
+			
+			
+			<a href="/posts/"><b>Posts</b></a>.
+			
+			<a href="/categories/"><b>Categories</b></a>.
+			
+			<a href="/sounds"><b>Sounds</b></a>.
+			
+			<a href="/tags/"><b>Tags</b></a>.
+			
+	</nav>
+	</p>
+	
+</header>
+
+	
+	<main>
+		<article>
+			<h1></h1>
+			<b><time>01.01.0001 00:00</time></b>
+		       
+
+			<div>
+				<h3 id="the-very-first-incarnation">The very FIRST “incarnation”</h3>
+<p>
+<figure>
+  <img src="/images/homelab/ansamblu.jpg" alt="Example image" />
+</figure>
+
+
+
+A discreet homelab, hidden away from curious toddlers' hands</p>
+<p>image</p>
+<h4 id="network-diagram">Network diagram</h4>
+<p>This was also the largest one, of course. I was overly-enthusiastic and didn’t really have any precise goals. A Raspberry Pi cluster was also included, because I found the idea to be very fascinating and cool.</p>
+<ul>
+<li>
+<p>1 x Atrust Intel-based thin client (an older, refurbished and fanless machine)</p>
+</li>
+<li>
+<p>1 x SuperMicro A1SAi mini-server based on the A1SRi-2358F motherboard, running VMWare ESXi (hosting an instance of pfSense that takes care of routing and LAN segments)</p>
+</li>
+<li>
+<p>1 x Proxmox VE Server (this is my former desktop that got converted to a server), based on an AMD Ryzen 5 CPU with 32 GB DDR4 &amp; almost 1 TB SSD storage</p>
+</li>
+<li>
+<p>1 x Dell OptiPlex 3050 Micro (7th gen i5, 8 GB DDR4, Windows 10 Pro) acting as a media &amp; file server (it’s linked to the TV and it also runs a Syncthing server to which our mobile phones upload photos - instead of relying on Google Photos, OneDrive, etc.)</p>
+</li>
+<li>
+<p>1 x TP-Link TL-WR841N/ND v7 (my 10-year old WiFi router, now running OpenWRT and taking care of the wireless network associated with the lab)</p>
+</li>
+<li>
+<p>1 x Zyxel 5-port Gigabit managed switch</p>
+</li>
+</ul>
+<p>Building the first lab</p>
+<p>I first took the Supermicro server, cleaned it up and placed it in the bottom drawer of a simple IKEA living room organizer. I actually dismantled the back of the drawer (made of pretty solid plastic) in order to have access to all ports and help with ventilation.
+image 	image 	image</p>
+<p>I placed the power sockets on top of it in a manner that doesn’t cover the server’s fans. I use two separate multiple socket thingies, each with an ON/OFF button. One of them is for the Raspberry Pi cluster, because I want to be able to shut that thing off when I’m not actively working with it.
+image 	image</p>
+<p>Time to get down on my knees and make the cable mess less messy.
+image</p>
+<p>Insert all cables and give it a go. Boy, that does sound good!
+image 	image 	image</p>
+<p>The ex-desktop (now server) running Proxmox VE can be seen in the third photo</p>
+<h4 id="what-did-i-use-it-for">What did I use it for?</h4>
+<p>Well, the Supermicro server had VMWare ESXi installed on it. pfSense ran in a VM and was binded to three physical NICs on the server (named WAN, LAB &amp; CLUSTER). This VM handled Internet traffic coming through from the crappy router provided by my ISP. I also ran a few other lightweight VMs on this server, like Pi-hole &amp; Alpine Linux.</p>
+<p>The Raspberry Pis were used for learning Kubernetes, Docker, Ansible, k3s/Rancher and toying around with NetBSD’s Kyua/ATF (an automated testing framework for Net &amp; FreeBSD - this was done on the RPi 2s). One of the RPis ran VMWare ESXi for ARM, for testing &amp; more (lighter) virtualization. The Atrust thin client was linked to the cluster and it was mainly used as a machine for coordinating the boards (Ansible &amp; the like).</p>
+<p>Dell OptiPlex 3050 Micro is a great mini-PC that’s used as a media center (on Windows 10 Pro) for streaming services. It also ran Syncthing (which we used at the time, before moving to NextCloud).</p>
+<p>Finally, the Proxmox VE server was used for more hardcore virtualization, mainly for studying/re-learning Windows &amp; UNIX servers at a more “business-like” level (Directory Services in mixed environments, unattended Windows deployments, Hyper-V administration, etc.).
+Why did I move on?</p>
+<p>Well, the Raspberry Pi cluster was too much of a mess for my taste. The RPi 4 gets WAY too hot so coolers were on almost 24/7 and I quickly noticed that, for my needs, the same computing power could be achieved with computers that did not require such complexity. After this, I replaced the cluster with two Dell Wyse mini-PCs.</p>
+
+			</div>
+		</article>
+	</main>
+<aside>
+	<div>
+		<div>
+			<h3>LATEST POSTS</h3>
+		</div>
+		<div>
+			<ul>
+				
+				<li><a href="/posts/curatenie-reprezentata-femei/">Femeile sunt Icoana curățeniei și a confortului</a></li>
+				
+				<li><a href="/posts/telefonul/">Telefonul</a></li>
+				
+				<li><a href="/posts/deploy-hyperv-2019/">Deploying Microsoft Hyper-V Server 2019 without a Domain Controller</a></li>
+				
+				<li><a href="/posts/soferi-grabiti-scaune-copii/">Șoferii grăbiți și scaunele auto pentru copii</a></li>
+				
+				<li><a href="/posts/create-fixed-sized-files/">Quickly creating fixed sized files in Linux &amp; Windows</a></li>
+				
+			</ul>
+		</div>
+	</div>
+</aside>
+
+
+	<footer>
+	<p>&copy; 2021 <a href="https://iorgos.net/"><b>iorgos.net</b></a>.
+	<a href="#ZgotmplZ"><b>E-mail</b></a>.
+	<a href="https://github.com/diorgulescu"><b>Github</b></a>.
+	<a href="https://mstdn.social/web/@scentient_pencils"><b>Mastodon</b></a>.
+	<a href="https://my.namebox.ro/aff.php?aff=505"><b>Proudly hosted on namebox.ro</b></a>.
+	</p>
+</footer>
+
+</body>
+</html>

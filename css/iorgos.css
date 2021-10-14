@@ -1,0 +1,9 @@
+html { margin: 1em auto; max-width: 80%; background-color:#08010b;color: #f5f5f0; -webkit-font-smoothing: antialiased;}
+body {font-family: 'Inconsolata', monospace; margin-left: auto; margin-right: auto;}
+p {text-align: justify; font-size: 1.1em; letter-spacing: 0.02em; word-spacing: -0.1em;margin: 1em 0;text-align: left;display: block;margin-block-start: 1em;margin-block-end: 1em;margin-inline-start: 0px;margin-inline-end: 0px;}
+h1, h2, h3 { font-weight: bold; }
+a {text-decoration: none;color:#ff6347;}
+h1.sitetitle {text-decoration:none; color:#ff4000;}
+table {vertical-align:baseline;}
+table.siteheader {font-family: 'monaco', monospace;}
+td.menu {vertical-align: baseline; padding-left: 2em; margin: auto; width: 50%; padding: 10px;}

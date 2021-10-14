@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on iorgos.net</title>
+    <link>https://iorgos.net/categories/</link>
+    <description>Recent content in Categories on iorgos.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 10 Jul 2021 22:00:00 +0000</lastBuildDate><atom:link href="https://iorgos.net/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>jurnal</title>
+      <link>https://iorgos.net/categories/jurnal/</link>
+      <pubDate>Sat, 10 Jul 2021 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/categories/jurnal/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gânduri</title>
+      <link>https://iorgos.net/categories/g%C3%A2nduri/</link>
+      <pubDate>Mon, 31 May 2021 16:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/categories/g%C3%A2nduri/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>howto</title>
+      <link>https://iorgos.net/categories/howto/</link>
+      <pubDate>Thu, 20 May 2021 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/categories/howto/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>thoughts</title>
+      <link>https://iorgos.net/categories/thoughts/</link>
+      <pubDate>Wed, 24 Mar 2021 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/categories/thoughts/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

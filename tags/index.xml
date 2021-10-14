@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on iorgos.net</title>
+    <link>https://iorgos.net/tags/</link>
+    <description>Recent content in Tags on iorgos.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 10 Jul 2021 22:00:00 +0000</lastBuildDate><atom:link href="https://iorgos.net/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>filosofeli</title>
+      <link>https://iorgos.net/tags/filosofeli/</link>
+      <pubDate>Sat, 10 Jul 2021 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/tags/filosofeli/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>digitalminimalism</title>
+      <link>https://iorgos.net/tags/digitalminimalism/</link>
+      <pubDate>Mon, 31 May 2021 16:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/tags/digitalminimalism/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>homelab</title>
+      <link>https://iorgos.net/tags/homelab/</link>
+      <pubDate>Thu, 20 May 2021 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/tags/homelab/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hyperv</title>
+      <link>https://iorgos.net/tags/hyperv/</link>
+      <pubDate>Thu, 20 May 2021 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/tags/hyperv/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>virtualization</title>
+      <link>https://iorgos.net/tags/virtualization/</link>
+      <pubDate>Thu, 20 May 2021 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/tags/virtualization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>windows</title>
+      <link>https://iorgos.net/tags/windows/</link>
+      <pubDate>Thu, 20 May 2021 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/tags/windows/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pățanii</title>
+      <link>https://iorgos.net/tags/p%C4%83%C8%9Banii/</link>
+      <pubDate>Mon, 03 May 2021 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/tags/p%C4%83%C8%9Banii/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>bash</title>
+      <link>https://iorgos.net/tags/bash/</link>
+      <pubDate>Wed, 24 Mar 2021 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/tags/bash/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>https://iorgos.net/tags/linux/</link>
+      <pubDate>Wed, 24 Mar 2021 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>thoughts</title>
+      <link>https://iorgos.net/tags/thoughts/</link>
+      <pubDate>Wed, 24 Mar 2021 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/tags/thoughts/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>powershell</title>
+      <link>https://iorgos.net/tags/powershell/</link>
+      <pubDate>Fri, 12 Feb 2021 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/tags/powershell/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cluster</title>
+      <link>https://iorgos.net/tags/cluster/</link>
+      <pubDate>Tue, 12 May 2020 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/tags/cluster/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>raspberry-pi</title>
+      <link>https://iorgos.net/tags/raspberry-pi/</link>
+      <pubDate>Tue, 12 May 2020 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/tags/raspberry-pi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>freebsd</title>
+      <link>https://iorgos.net/tags/freebsd/</link>
+      <pubDate>Wed, 23 Oct 2019 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/tags/freebsd/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>suckless</title>
+      <link>https://iorgos.net/tags/suckless/</link>
+      <pubDate>Wed, 23 Oct 2019 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/tags/suckless/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

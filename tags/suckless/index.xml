@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>suckless on iorgos.net</title>
+    <link>https://iorgos.net/tags/suckless/</link>
+    <description>Recent content in suckless on iorgos.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 23 Oct 2019 22:00:00 +0000</lastBuildDate><atom:link href="https://iorgos.net/tags/suckless/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Compiling ‘suckless tools’ on FreeBSD</title>
+      <link>https://iorgos.net/posts/compiling-suckless-tools-freebsd/</link>
+      <pubDate>Wed, 23 Oct 2019 22:00:00 +0000</pubDate>
+      
+      <guid>https://iorgos.net/posts/compiling-suckless-tools-freebsd/</guid>
+      <description>I wrote this tutorial for potential new users that want to try out new stuff and wish to expand their technical knowledge, but also because there are some commands and details around here I might forget some months or years down the line (for example, Xorg video driver configurations). The whole writing process was a very good opportunity for me to extend the CSS I used for my website and to try do to a better job at formatting tech/code/console-related text.</description>
+    </item>
+    
+  </channel>
+</rss>

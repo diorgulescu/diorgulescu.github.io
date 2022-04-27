@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang=en>
+
+<head>
+<meta charset=UTF-8>
+<meta name=viewport content=width=device-width, initial-scale=1>
+<meta http-equiv=X-UA-Compatible content=IE=edge>
+
+<title>Dragoș Iorgulescu</title>
+<link rel=stylesheet
+href=s.css?2022-04-28T00:10:20Z>
+
+</head>
+
+<body>
+<div id=header>
+<a id=title href=/><h1>Dragoș Iorgulescu</h1></a>
+</div>
+
+<div id=content>
+<h2>Deploying Microsoft Hyper-V Server 2019 without a Domain Controller</h2>
+<p><em>20.05.2021</em></p>
+<h3>Prerequisites</h3>
+<ul>
+<li>For fully managing the Hyper-V server remotely, you need to install Remote Server Administration Tools</li>
+<li>Download the Hyper-V 2019 ISO from Microsoft</li>
+<li>Rufus USB flashing tool</li>
+<li>A decent PC LOL</li>
+</ul>
+<h3>Installation</h3>
+<p>Well, not much to say here. Pretty straightforward, just like a normal Windows installation.</p>
+<p>Once the ISO is downloaded, stick an USB stick into your PC and launch Rufus. Select the ISO file you’ve just downloaded, make sure the USB stick is selected and check that GPT is used. Reboot your server-to-be and select the USB drive as a boot option. Then, carry on as usual.</p>
+<p>Easy-peasy lemon-squeezy!</p>
+<h3>Enable Remote Hyper-V Management</h3>
+<p>This is strictly in regards to Hyper-V and it’s settings. For “full” remote server management, please see the section about using Remote Administration Tools/Server Manager. All commands are for Powershell, unless otherwise specified so. Make sure you run these in a Powershell session with administrative rights!</p>
+<p>On The Server:</p>
+<p><code>`
+Enable-PSRemoting Enable-WSManCredSSP -Role server
+</code>`</p>
+<p>On the client (my laptop in this case):</p>
+<p><code>`
+Set-Item WSMan:\localhost\Client\TrustedHosts -Value &quot;HYPERV-SERVER&quot; Enable-WSManCredSSP -Role &quot;Client&quot; -DelegateComputer &quot;HYPERV-SERVER&quot;
+</code>`</p>
+<p>Now, for me this did not seem to work at all, so I reissued the commands above, but with the IP address replacing the FQDN of the Hyper-V server:</p>
+<p><code>`
+Set-Item WSMan:\localhost\Client\TrustedHosts -Value &quot;192.168.1.6&quot; Enable-WSManCredSSP -Role &quot;Client&quot; -DelegateComputer &quot;192.168.1.6&quot;
+</code>`</p>
+<p>After that, it was required for me edit the Group Policies.</p>
+<h3>Edit Group Policies</h3>
+<p>Again, following the official instructions from Microsoft proved to be insufficient, so I once again need to praise Taylord Tech, because he did encounter all these issues and pointed to a valuable tip.</p>
+<p>Open <strong>gpedit.msc</strong> and go to <strong>“Computer Configuration &gt; Administrative Templates &gt; System &gt; Credentials Delegation”</strong>. Double click <strong>“Allow delegating fresh credentials with NTLM-only server authentication”</strong> and select <strong>“Enable”</strong>. Then, Click <strong>“Show”</strong>, next to <strong>“Add servers to the list”</strong> and add <strong>“WSMAN*“</strong>. The official docs say one should add the FQDN of the server (<strong>“WSMAN\HYPERV-SERVER” in my case</strong>), but that didn’t work at all for me.</p>
+<h3>Enable Remote Disk Management</h3>
+<p>I did not succeed in setting up remote disk management, even though I did follow some how-to’s/tutorials/links in the MS Docs. I issued the following PowerShell commands on both the server &amp; the client, but with no luck:</p>
+<p><code>`
+Set-NetFirewallRule –Name “RVM-VDS-In-TCP” –Enabled True -Profile Any
+Set-NetFirewallRule –Name “RVM-VDSLDR-In-TCP” –Enabled True -Profile Any
+Set-NetFirewallRule –Name “RVM-RPCSS-In-TCP” –Enabled True -Profile Any
+</code>`</p>
+<p>After installing Remote Server Administration Tools on my Windows 10 laptop, I couldn’t get the Server Manager to properly connect to the Hyper-V host. I have some things to learn, that’s true. The errors were in regards to HTTPS access, since my laptop &amp; server are not part of a domain (I guess that has something to do with it).</p>
+<p>But, for my needs, a simple Remote Desktop Connection was enough.</p>
+<h3>Adding a new disk</h3>
+<p>I ran the ‘diskpart.exe’ tool from a simple command prompt (“cmd.exe”) and formatted the second SSD drive on my server (~500GB) and assigned it a drive letter:</p>
+<p><code>`
+c:\diskpart
+DISKPART&gt; list disk
+Disk ###  Status         Size     Free     Dyn  Gpt
+--------  -------------  -------  -------  ---  ---
+Disk 0    Online          120 GB     0 B
+Disk 1    Online          500 GB   200 GB
+DISKPART&gt; select disk 1
+Disk 1 is now the selected disk.
+DISKPART&gt; create partition primary
+DISKPART&gt; list partition
+DISKPART&gt; select partition 1
+DISKPART&gt; format fs=NTFS quick
+DISKPART&gt; assign letter=D
+</code>`</p>
+<h3>Copying files to the Hyper-V host</h3>
+<p>Now, I just needed a way to actually copy some ISO’s over to the server so that I could install various operating systems. Being in the context of a homelab, I resorted to file sharing (I even mapped the drive on which I keep my “ISO store”). For that, I issued the following from a Powershell instance on the Server:</p>
+<p><code>`
+netsh advfirewall firewall set rule group=&quot;File and Printer Sharing&quot; new enable=Yes
+</code>`</p>
+<p>Then, I mapped the C: drive on my server to Z: on my laptop. This way, I was able to copy all ISO files I would ever need (and not only that).</p>
+<p>Right after that, I began installing my first VMs on my first homelab Hyper-V Server.</p>
+<p>Yay me!</p>
+<h3>References &amp; Resources</h3>
+<ul>
+<li>https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/manage/remotely-manage-hyper-v-hosts</li>
+<li>https://www.youtube.com/watch?v=57Ijn7re8X8</li>
+<li>https://social.technet.microsoft.com/Forums/office/en-US/cbdbcf92-d697-41d1-aa7a-bacf34bd48a5/remote-disk-management-rpc-server-unavailable</li>
+<li>https://serverfault.com/questions/449192/server-2012-core-no-gui-how-to-manage-disks</li>
+<li>http://technet.microsoft.com/en-us/library/cc770877.aspx</li>
+<li>https://www.nakivo.com/blog/copy-iso-file-hyper-v-host/</li>
+</ul>
+</div>
+</body>
+
+<footer>
+<hr/>
+<a href=mailto:dragos@iorgos.net>E-Mail</a> | <a href=https://github.com/diorgulescu>GitHub</a> | <a href=https://twitter.com/cibiliciceanu>Twitter</a> | <a href=https://www.linkedin.com/in/drago%C8%99-iorgulescu-77a7a2155/> LinkedIn</a> <br/>
+Built with <a href=https://mkws.sh>mkws</a>. Hosted on <a href=https://my.namebox.ro/aff.php?aff=505>namebox.ro</a>.
+</footer>
+</html>

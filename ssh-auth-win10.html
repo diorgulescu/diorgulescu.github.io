@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang=en>
+
+<head>
+<meta charset=UTF-8>
+<meta name=viewport content=width=device-width, initial-scale=1>
+<meta http-equiv=X-UA-Compatible content=IE=edge>
+
+<title>Dragoș Iorgulescu</title>
+<link rel=stylesheet
+href=s.css?2022-04-28T00:10:20Z>
+
+</head>
+
+<body>
+<div id=header>
+<a id=title href=/><h1>Dragoș Iorgulescu</h1></a>
+</div>
+
+<div id=content>
+<h2>SSH key-based authentication in Windows 10 (using no password)</h2>
+<p><em>01.11.2020</em></p>
+<p>I found this solution here: []. Thanks a lot for that! Just adding this to my own “docs base” for personal future reference.</p>
+<p>Working with Linux/UNIX machines, I rely a lot on SSH. Thus, not having to type passwords each time I open a new session is a great plus. Achieving this on Linux systems is trivial, since you have the ssh-copy-id command at hand. But, on Windows, that’s missing. Luckily, there is a (logical) way around that, instead of adding keys by hand in the remote server’s authorized<em>keys file (like I used to do). Below you can see how a new RSA key is generated and then copied to the remote host using a one-liner:
+<code></code>`
+PS C:\Users\drago> ssh-keygen.exe -t rsa
+Enter file in which to save the key (C:\Users\drago/.ssh/id</em>rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in C:\Users\drago/.ssh/id<em>rsa.
+Your public key has been saved in C:\Users\drago/.ssh/id</em>rsa.pub.
+The key fingerprint is:
+SHA256:9IHYvsX6pbpS9Fwuq3j648ceNN7pH5MFEt8n0y9O6Jk drago@DESKTOP-KDTKFHA
+The key's randomart image is:
++---[RSA 2048]----+
+|            .    |
+|       o .   o o |
+|      . + . . = +|
+|       o.o ..o +o|
+|       .So<em>o. o o|
+|        .</em>++.<em> + |
+|       .o.ooE =  |
+|      ..o.+=   o |
+|      o</em>*B+ ...  |
++----[SHA256]-----+
+<code>`
+Once the key has been generated, copy it to the remote server. Use your current credentials (</code><code>user@server</code><code>). You will be asked to type the password once.
+</code><code>
+PS C:\Users\drago&gt; type $env:USERPROFILE\.ssh\id_rsa.pub | ssh user@myserver &quot;cat &gt;&gt; .ssh/authorized_keys&quot;
+user@myserver's password:
+</code><code></code>
+And that’s it. Now, each time you ssh to that server (using the specified account), you will be directly logged in, without any other password prompts.</p>
+</div>
+</body>
+
+<footer>
+<hr/>
+<a href=mailto:dragos@iorgos.net>E-Mail</a> | <a href=https://github.com/diorgulescu>GitHub</a> | <a href=https://twitter.com/cibiliciceanu>Twitter</a> | <a href=https://www.linkedin.com/in/drago%C8%99-iorgulescu-77a7a2155/> LinkedIn</a> <br/>
+Built with <a href=https://mkws.sh>mkws</a>. Hosted on <a href=https://my.namebox.ro/aff.php?aff=505>namebox.ro</a>.
+</footer>
+</html>

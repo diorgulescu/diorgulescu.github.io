@@ -1,0 +1,11 @@
+body{font-family:Georgia,serif;font-size: 20px;line-height: 30px;color:black; background-color:ghostwhite; max-width: 85%; margin: auto;}
+p{text-align:justify;}
+div.emojis{font-size:25px;text-align: center;}
+div#header{margin-bottom: 3em;}
+img{max-width:100%;display:block;height:auto;margin-left:auto;margin-right:auto;border-radius:8px;}
+img#selfie{max-width:100%;height:auto;margin-left:auto;margin-right:auto; border: 3px darkslategrey;border-radius:50%;}
+a#title{text-decoration: none;color:darkslategrey;}
+td#photo{align: center; text-align:center;}
+td#description{text-align:justify;}
+footer{text-align: center;}
+
